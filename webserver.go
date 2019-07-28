@@ -10,6 +10,7 @@ type WebHandlerFunc func(ctx *WebContext)
 type WebServer struct {
 	Router *httprouter.Router
 	middlewareList []WebHandlerFunc
+	endMiddlewareList []WebHandlerFunc
 }
 
 
@@ -30,6 +31,12 @@ func (s *WebServer)USE(funcs ...WebHandlerFunc)  {
 	}
 }
 
+func (s *WebServer)EUSE(funcs ...WebHandlerFunc)  {
+	for _, f := range funcs{
+		s.endMiddlewareList = append(s.endMiddlewareList, f)
+	}
+}
+
 
 func (s *WebServer)genHandler(handlerFunc WebHandlerFunc) httprouter.Handle {
 	return func(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
@@ -43,5 +50,8 @@ func (s *WebServer)genHandler(handlerFunc WebHandlerFunc) httprouter.Handle {
 			midFunc(context)
 		}
 		handlerFunc(context)
+		for _, emidFunc := range s.endMiddlewareList{
+			emidFunc(context)
+		}
 	}
 }

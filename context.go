@@ -3,13 +3,15 @@ package realgo
 import (
 	"net/http"
 	"github.com/julienschmidt/httprouter"
+	"realgo/lib/logger"
 )
 
 type WebContext struct {
 	Response http.ResponseWriter
 	Request *http.Request
 	Params httprouter.Params
-	keys map[string]interface{}
+	Keys map[string]interface{}
+	Logger *logger.Logger
 }
 
 func (ctx *WebContext)Init()  {
@@ -17,33 +19,33 @@ func (ctx *WebContext)Init()  {
 }
 
 func (ctx *WebContext)Set(key string, value interface{})  {
-	if ctx.keys == nil{
-		ctx.keys = make(map[string]interface{})
+	if ctx.Keys == nil{
+		ctx.Keys = make(map[string]interface{})
 	}
-	ctx.keys[key] = value
+	ctx.Keys[key] = value
 }
 
 func (ctx *WebContext)Get(key string)(value interface{}, exists bool)  {
-	value, exists = ctx.keys[key]
+	value, exists = ctx.Keys[key]
 	return
 }
 
 func (ctx *WebContext)GetInt(key string)(v int)  {
-	if value, ok := ctx.keys[key]; ok && value != nil{
+	if value, ok := ctx.Keys[key]; ok && value != nil{
 		v, _ = value.(int)
 	}
 	return
 }
 
 func (ctx *WebContext)GetInt64(key string)(v int64)  {
-	if value, ok := ctx.keys[key]; ok && value != nil{
+	if value, ok := ctx.Keys[key]; ok && value != nil{
 		v, _ = value.(int64)
 	}
 	return
 }
 
 func (ctx *WebContext)GetString(key string)(v string)  {
-	if value, ok := ctx.keys[key]; ok && value != nil{
+	if value, ok := ctx.Keys[key]; ok && value != nil{
 		v, _ = value.(string)
 	}
 	return

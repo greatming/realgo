@@ -49,6 +49,7 @@ func (app *App) RegisterRouter(rr RouterRegister)  {
 
 func (app *App)StartServer()  {
 	fmt.Println(app.Config.Host+":"+app.Config.Port)
+
 	http.ListenAndServe(app.Config.Host+":"+app.Config.Port, app.WebServer().Router)
 }
 
