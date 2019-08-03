@@ -87,7 +87,6 @@ func New() *Logger {
 	}
 }
 func SetLevel(level int32) {
-	Critical("set log level to %v", level)
 	atomic.StoreInt32(&_log.level, level)
 }
 func GetLevel() int32 {

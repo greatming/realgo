@@ -14,6 +14,14 @@ type WebServer struct {
 }
 
 
+type NotFound struct {
+	HandlerFun func(http.ResponseWriter, *http.Request)
+}
+
+func (n *NotFound)ServeHTTP(w http.ResponseWriter, r *http.Request)  {
+	n.HandlerFun(w, r)
+}
+
 
 func (s *WebServer)GET(path string, handlerFunc WebHandlerFunc)  {
 	handler := s.genHandler(handlerFunc)
@@ -23,6 +31,12 @@ func (s *WebServer)GET(path string, handlerFunc WebHandlerFunc)  {
 func (s *WebServer)POST(path string, handlerFunc WebHandlerFunc)  {
 	handler := s.genHandler(handlerFunc)
 	s.Router.POST(path, handler)
+}
+
+func (s *WebServer)NotFound(fun func(http.ResponseWriter, *http.Request))  {
+	serv := &NotFound{}
+	serv.HandlerFun = fun
+	s.Router.NotFound = serv
 }
 
 func (s *WebServer)USE(funcs ...WebHandlerFunc)  {
