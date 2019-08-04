@@ -33,7 +33,6 @@ func (r *RealDB)SetCluster(dbname string, DBCfg *DBItemConf) bool {
 
 	log := logger.New()
 	tdb := NewDBHandler(DBCfg.Pool, DBCfg.Info, log)
-	fmt.Println(tdb.GetInstance())
 	r.m.Store(dbname, tdb)
 	return true
 }

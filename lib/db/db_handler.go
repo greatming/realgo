@@ -48,7 +48,6 @@ type DBConnInfo struct {
 func (db *DBHandler) getHandler(user, pwd, host, dbname string) (*DBConnInfo, error) {
 	str := fmt.Sprintf("%s:%s@tcp(%s)/%s?readTimeout=%dms&writeTimeout=%dms&parseTime=True&charset=utf8",
 		user, pwd, host, dbname, db.PoolCfg.ReadTimeout, db.PoolCfg.WriteTimeout)
-	fmt.Println(str)
 	handler, err := gorm.Open("mysql", str)
 	if err != nil {
 		db.Logger.Warn("Open " + str + " failed, err: " + err.Error())
