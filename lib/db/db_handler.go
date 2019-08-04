@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"math/rand"
 	_"github.com/go-sql-driver/mysql"
-	"github.com/realgo/lib/logger"
+	"github.com/greatming/realgo/lib/logger"
 	"github.com/jinzhu/gorm"
 )
 
