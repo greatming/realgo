@@ -2,7 +2,7 @@ package conf
 
 import (
 	"io/ioutil"
-	"realgo/lib/toml"
+	"github.com/realgo/lib/toml"
 	_"sync"
 	"sync"
 	"fmt"

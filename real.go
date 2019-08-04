@@ -2,7 +2,7 @@ package realgo
 
 import (
 	"github.com/julienschmidt/httprouter"
-	"realgo/conf"
+	"github.com/realgo/conf"
 	"net/http"
 	"fmt"
 )

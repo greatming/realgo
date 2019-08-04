@@ -3,7 +3,7 @@ package realgo
 import (
 	"net/http"
 	"github.com/julienschmidt/httprouter"
-	"realgo/lib/logger"
+	"github.com/realgo/lib/logger"
 )
 
 type WebContext struct {

@@ -2,7 +2,7 @@ package conf
 
 import (
 	"path/filepath"
-	"realgo/env"
+	"github.com/realgo/env"
 )
 
 func FileAbsPath(confRealPath string) string {

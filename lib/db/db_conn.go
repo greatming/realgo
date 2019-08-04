@@ -2,7 +2,7 @@ package db
 
 import (
 	"sync"
-	"realgo/lib/logger"
+	"github.com/realgo/lib/logger"
 	"fmt"
 )
 
