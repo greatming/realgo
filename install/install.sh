@@ -1,5 +1,7 @@
 #! /bin/bash
 
+cd `dirname $0`
+
 tmpdir=$GOPATH
 OLD_IFS="$IFS"
 IFS=":"
@@ -19,10 +21,9 @@ tar -zxf ./myframe.tar.gz
 sed -i " "  "s/myframe/${appName}/g"  `grep -rl  myframe ./myframe`
 
 targetDir=$targetDir$appName
-echo $targetDir
 
 if [ -d $targetDir ]; then
-    echo 'targetDir is exits'
+    echo $targetDir 'folder is exits'
     exit
 fi
 
