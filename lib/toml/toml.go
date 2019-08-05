@@ -10,4 +10,3 @@ var (
 	DecodeReader = toml.DecodeReader
 	Unmarshal    = toml.Unmarshal
 )
-

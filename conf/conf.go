@@ -1,19 +1,18 @@
 package conf
 
 import (
-	"io/ioutil"
-	"github.com/greatming/realgo/lib/toml"
-	_"sync"
-	"sync"
 	"fmt"
+	"github.com/greatming/realgo/lib/toml"
+	"io/ioutil"
 	"reflect"
+	"sync"
+	_ "sync"
 )
 
 var confCache sync.Map
 
-
 // 读取配置文件
-func ReadFile(confPath string, config interface{})(err error){
+func ReadFile(confPath string, config interface{}) (err error) {
 
 	var bs []byte
 	var realFilePath string = FileAbsPath(confPath)
@@ -22,13 +21,13 @@ func ReadFile(confPath string, config interface{})(err error){
 
 	if !ok {
 		bs, err = ioutil.ReadFile(realFilePath)
-		if err != nil{
-			return  err
+		if err != nil {
+			return err
 		}
 		var confStr = string(bs)
 		_, err = toml.Decode(confStr, config)
-		if err != nil{
-			return  err
+		if err != nil {
+			return err
 		}
 		confCache.Store(cacheKey, reflect.ValueOf(config).Elem().Interface())
 		return
@@ -40,7 +39,7 @@ func ReadFile(confPath string, config interface{})(err error){
 }
 
 //读取app配置文件
-func ReadAppConfFile(confPath string, config interface{})(err error)  {
+func ReadAppConfFile(confPath string, config interface{}) (err error) {
 	confPath = "./conf/" + confPath
 	return ReadFile(confPath, config)
 }

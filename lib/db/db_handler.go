@@ -1,14 +1,13 @@
 package db
 
 import (
-	"time"
 	"fmt"
-	"math/rand"
-	_"github.com/go-sql-driver/mysql"
+	_ "github.com/go-sql-driver/mysql"
 	"github.com/greatming/realgo/lib/logger"
 	"github.com/jinzhu/gorm"
+	"math/rand"
+	"time"
 )
-
 
 type DBPoolConf struct {
 	MaxOpenConn  int `toml:"MaxOpenConn"`
@@ -34,15 +33,12 @@ type DBHandler struct {
 	Info    DBInfoConf
 	PoolCfg DBPoolConf
 	Handler []*DBConnInfo
-	Logger *logger.Logger
+	Logger  *logger.Logger
 }
 
-
-
-
 type DBConnInfo struct {
-	DB          *gorm.DB
-	Logger  *logger.Logger
+	DB     *gorm.DB
+	Logger *logger.Logger
 }
 
 func (db *DBHandler) getHandler(user, pwd, host, dbname string) (*DBConnInfo, error) {
@@ -59,14 +55,13 @@ func (db *DBHandler) getHandler(user, pwd, host, dbname string) (*DBConnInfo, er
 	dbhandler.SetMaxIdleConns(db.PoolCfg.MaxIdleConn)
 	dbhandler.SetConnMaxLifetime(time.Duration(db.PoolCfg.MaxLifeTime) * time.Second)
 
-
 	db.Logger.Info4("Open DB: %s with pool [MaxOpenConns:%d] [MaxIdleConns:%d] [MaxLifeTime:%d]",
 		str, db.PoolCfg.MaxOpenConn, db.PoolCfg.MaxIdleConn, db.PoolCfg.MaxLifeTime)
 	//测试是否能连上DB
 	if err := dbhandler.Ping(); err != nil {
 		return nil, err
 	}
-	return &DBConnInfo{DB:handler, Logger:db.Logger}, err
+	return &DBConnInfo{DB: handler, Logger: db.Logger}, err
 }
 func (db *DBHandler) GetInstance() (*DBConnInfo, error) {
 	if len(db.Handler) == 0 {

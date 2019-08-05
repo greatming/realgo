@@ -1,10 +1,10 @@
 package conf
 
 import (
-	"path/filepath"
 	"github.com/greatming/realgo/env"
+	"path/filepath"
 )
 
 func FileAbsPath(confRealPath string) string {
-	return  filepath.Join(env.GetRootPath(), confRealPath)
+	return filepath.Join(env.GetRootPath(), confRealPath)
 }

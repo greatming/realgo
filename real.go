@@ -1,56 +1,52 @@
 package realgo
 
 import (
-	"github.com/julienschmidt/httprouter"
-	"github.com/greatming/realgo/conf"
-	"net/http"
 	"fmt"
+	"github.com/greatming/realgo/conf"
+	"github.com/julienschmidt/httprouter"
+	"net/http"
 )
-
-
 
 type App struct {
 	Config *AppConfig
 	Server *WebServer
 }
 type AppConfig struct {
-	AppName  string `toml:"app_name"`
-	RunMode  string `toml:"run_mode"`
-	Host     string `toml:"host"`
-	Port     string `toml:"port"`
+	AppName string `toml:"app_name"`
+	RunMode string `toml:"run_mode"`
+	Host    string `toml:"host"`
+	Port    string `toml:"port"`
 }
 
-func New() *App{
+func New() *App {
 	appconfig := &AppConfig{}
 	conf.ReadAppConfFile("app.toml", appconfig)
 	webServer := &WebServer{
-		Router:httprouter.New(),
+		Router: httprouter.New(),
 	}
 	engine := &App{
 		Config: appconfig,
 		Server: webServer,
 	}
-	return  engine
+	return engine
 }
 
-func Test()  *httprouter.Router{
+func Test() *httprouter.Router {
 	return httprouter.New()
 }
 
 type RouterRegister func(*WebServer)
 
-func (app *App)WebServer() *WebServer {
+func (app *App) WebServer() *WebServer {
 	return app.Server
 }
 
-func (app *App) RegisterRouter(rr RouterRegister)  {
+func (app *App) RegisterRouter(rr RouterRegister) {
 	rr(app.WebServer())
 }
 
-func (app *App)StartServer()  {
-	fmt.Println(app.Config.Host+":"+app.Config.Port)
+func (app *App) StartServer() {
+	fmt.Println(app.Config.Host + ":" + app.Config.Port)
 
 	http.ListenAndServe(app.Config.Host+":"+app.Config.Port, app.WebServer().Router)
 }
-
-

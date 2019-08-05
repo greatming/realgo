@@ -1,18 +1,20 @@
 package logger
+
 import (
-"fmt"
-"io/ioutil"
-"os"
-"path/filepath"
-"regexp"
-"runtime"
-"runtime/debug"
-"sort"
-"strings"
-"sync"
-"sync/atomic"
-"time"
+	"fmt"
+	"io/ioutil"
+	"os"
+	"path/filepath"
+	"regexp"
+	"runtime"
+	"runtime/debug"
+	"sort"
+	"strings"
+	"sync"
+	"sync/atomic"
+	"time"
 )
+
 // RFC5424
 const (
 	LEVEL_EMERGENCY = iota
@@ -26,6 +28,7 @@ const (
 	LEVEL_DEBUG   //8
 	LEVEL_VERBOSE //9
 )
+
 var (
 	levelStrings = []string{
 		"[EMERGENCY]",
@@ -40,6 +43,7 @@ var (
 		"[VERB]",
 	}
 )
+
 // A Logger represents an active logging object that generates lines of
 // output to an io.Writer.  Each logging operation makes a single call to
 // the Writer's Write method.  A Logger can be used simultaneously from
@@ -65,6 +69,7 @@ type Logger struct {
 	buf        string
 	mu         sync.Mutex
 }
+
 /*
  * global static var
  */
@@ -79,6 +84,7 @@ var _log = &LoggerBase{
 	useISIS:      false,
 	printCatal:   false,
 }
+
 func New() *Logger {
 	return &Logger{
 		reqinfo:    make(map[string]string),
@@ -189,6 +195,7 @@ func getFilesToDelete(path string, fileFilter *regexp.Regexp, backupCount int) [
 	}
 	return result
 }
+
 /*
  * enable rotate whit peirod
  * peirod can be: time.Minute, time.Hour, 24 * time.Hour
@@ -337,6 +344,7 @@ func (L *Logger) Stacktrace(level int32, format string, v ...interface{}) {
 	L.formatBaseInfo()
 	_log.output(level, L.buf, format+" --- stack: \n%s", v, debug.Stack())
 }
+
 /*
  * variadic is slow because we create temp slices
  * so we add some help functions
@@ -445,6 +453,7 @@ func (L *Logger) Info4(format string, a interface{}, b interface{}, c interface{
 	L.formatBaseInfo()
 	_log.output(LEVEL_INFO, L.buf, format, a, b, c, d)
 }
+
 // Cheap integer to fixed-width decimal ASCII.
 // Give a negative width to avoid zero-padding.
 // Knows the buffer has capacity.
@@ -599,6 +608,7 @@ func (l *LoggerBase) output(level int32, baseinfo, format string, v ...interface
 func GetDefaultLogger() *LoggerBase {
 	return _log
 }
+
 // Output 与 "log" Logger 定义相同的Output接口，通过这个文件可以实现跨模块的日志打印
 // Output 是日志打印最底层的代码，日志级别需要在Output上层实现
 func (l *LoggerBase) Output(calldepth int, s string) error {

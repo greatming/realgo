@@ -7,12 +7,12 @@ import (
 var rootPath string
 
 func GetRootPath() string {
-	if(rootPath != ""){
+	if rootPath != "" {
 		return rootPath
 	}
 	var err error
 	rootPath, err = os.Getwd()
-	if err != nil{
+	if err != nil {
 		panic("can't init root path ")
 	}
 	return rootPath
