@@ -9,18 +9,26 @@ arr=($tmpdir)
 IFS="$OLD_IFS"
 targetDir=${arr[0]}/src/
 
+
 appName=$1
 if [ $# -lt 1 ];then
     appName=myframe
 fi
 
+if [ $# -gt 1 ];then
+    targetDir=$2
+fi
+
+
+rm -rf  ./myframe
 
 tar -zxf ./myframe.tar.gz 
-
 
 sed -i " "  "s/myframe/${appName}/g"  `grep -rl  myframe ./myframe`
 
 targetDir=$targetDir$appName
+
+
 
 if [ -d $targetDir ]; then
     echo $targetDir 'folder is exits'
