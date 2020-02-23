@@ -9,7 +9,7 @@ go get github.com/greatming/realgo
 2：创建app  
 ${GOPATH}/src/github.com/greatming/realgo/install/install.sh  {$app_name}  {$app_path}
 
-/Users/hmreal/mygo/lib/src/github.com/greatming/realgo/install/install.sh  mysite  /Users/baidu/opt/
+例如： /Users/hmreal/mygo/lib/src/github.com/greatming/realgo/install/install.sh  mysite  /Users/baidu/opt/
 
 3:下载app依赖模块  
 ~~cd  ${GOPATH}/src/{$appname} && godep restore~~   
