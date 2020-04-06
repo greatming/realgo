@@ -24,7 +24,7 @@ rm -rf  ./myframe
 
 tar -zxf ./myframe.tar.gz 
 
-sed -i " "  "s/myframe/${appName}/g"  `grep -rl  myframe ./myframe`
+sed -i ""  "s/myframe/${appName}/g"  `grep -rl  myframe ./myframe`
 
 targetDir=$targetDir$appName
 
