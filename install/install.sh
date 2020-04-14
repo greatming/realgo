@@ -26,8 +26,7 @@ tar -zxf ./myframe.tar.gz
 
 sed -i ""  "s/myframe/${appName}/g"  `grep -rl  myframe ./myframe`
 
-targetDir=$targetDir$appName
-
+targetDir="${targetDir}/${appName}"
 
 
 if [ -d $targetDir ]; then
