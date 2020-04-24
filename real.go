@@ -1,10 +1,11 @@
 package realgo
 
 import (
-	"fmt"
 	"github.com/greatming/realgo/conf"
+	"github.com/greatming/realgo/lib/graceful"
 	"github.com/julienschmidt/httprouter"
-	"net/http"
+	"log"
+	"os"
 )
 
 type App struct {
@@ -45,8 +46,19 @@ func (app *App) RegisterRouter(rr RouterRegister) {
 	rr(app.WebServer())
 }
 
-func (app *App) StartServer() {
-	fmt.Println(app.Config.Host + ":" + app.Config.Port)
+func initRuntimeLog() {
+	file, err := os.OpenFile("log/runtime.log",
+		os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
+	if err != nil {
+		log.Fatalln("Failed to open error log file:", err)
+	}
+	log.SetOutput(file)
+}
 
-	http.ListenAndServe(app.Config.Host+":"+app.Config.Port, app.WebServer().Router)
+func (app *App) StartServer() {
+	initRuntimeLog()
+	addr := app.Config.Host + ":" + app.Config.Port
+	handler := app.WebServer().Router
+	log.Println(addr)
+	graceful.StartServer(addr, handler)
 }
